@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-from checkmate2 import checkmate2
+from checkmate import checkmate
 
 def main():
     board = """\
     # # . .
-    K . P .
+    . . P .
     . K . .
     . . . .\
     """
-    checkmate2(board)
+    checkmate(board)
 
 if __name__ == "__main__":
     main()
