@@ -26,6 +26,24 @@ def check_square(num_rows, num_cols):
     else:
         print("ไม่ใช่ตารางจัตุรัส ❌")
 
+def is_1king(board_rows):
+    count = 0
+    for row in board_rows:
+        count += row.count('K')
+    if count == 1:
+        return True
+    else:
+        print("กรุณาใส่บอร์ดใหม่ที่มี King 1 ตัว")
+        return False
+
+def find_king(matrix): 
+    for r in range(len(matrix)):
+        for c in range(len(matrix[r])):
+            if matrix[r][c] == 'K':
+                print(f"✅ เจอ King ที่ตำแหน่ง: แถว {r}, คอลัมน์ {c}")
+                return r, c
+    return None
+
 # --- ฟังก์ชันหลัก ---
 def checkmate2(board):
     if not board:
@@ -50,4 +68,7 @@ def checkmate2(board):
 
     print(f"ขนาด: {num_rows} แถว x {num_cols} คอลัมน์")
     check_square(num_rows, num_cols)
+    
+    is_1king(board)
+    find_king(matrix)
 
