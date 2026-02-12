@@ -100,9 +100,9 @@ def check_Rook(matrix, k_row, k_col):
 def check_Pawn(matrix, k_row, k_col):
     
     size = len(matrix)
-    attack_positions = [(1, -1), (1, 1)] 
+    directions = [(1, -1), (1, 1)] 
     
-    for d_row, d_col in attack_positions:
+    for d_row, d_col in directions:
         r, c = k_row + d_row, k_col + d_col
         
         if 0 <= r < size and 0 <= c < size:
@@ -139,6 +139,44 @@ def check_Queen(matrix, k_row, k_col):
     # print("Queen: FAIL")
     return True
 
+# **********************************************
+def is_square_safe(matrix, r, c):
+    size = len(matrix)
+    original = matrix[r][c]
+
+    matrix[r][c] = 'K'
+
+    safe = (
+        check_Bishop(matrix, r, c) and
+        check_Rook(matrix, r, c) and
+        check_Pawn(matrix, r, c) and
+        check_Queen(matrix, r, c)
+    )
+    matrix[r][c] = original
+
+    return safe
+
+
+def find_safe_moves(matrix, k_row, k_col):
+    directions = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
+
+    size = len(matrix)
+    safe_moves = []
+
+    for d_row, d_col in directions:
+        r = k_row + d_row
+        c = k_col + d_col
+
+        if 0 <= r < size and 0 <= c < size:
+            if matrix[r][c] not in ('K','R','B','P','Q'):
+                if is_square_safe(matrix, r, c):
+                    safe_moves.append((r, c))
+
+    return safe_moves
+
+
+# **********************************************
+
 def checkmate(board):
     if not board:
         # print("กรุณาใส่ข้อมูล")
@@ -163,24 +201,34 @@ def checkmate(board):
         return
 
 
+    threat = False
+
     if not check_Bishop(matrix,k_row,k_col):
-        print("Success")
-        return
-    
+        threat = True
     if not check_Rook(matrix,k_row,k_col):
-        print("Success")
-        return
+        threat = True
+    if not check_Pawn(matrix,k_row,k_col):
+        threat = True
+    if not check_Queen(matrix,k_row,k_col):
+        threat = True
 
-    if not check_Pawn(matrix, k_row, k_col):
-        print("Success")
-        return
-
-    if not check_Queen(matrix, k_row, k_col):
-        print("Success")
-        return
     
+    safe_moves = find_safe_moves(matrix, k_row, k_col)
+
+    if threat:
+        print("Success")
+        if safe_moves:
+            print(f"Escape moves: {safe_moves}")
+        else:
+            print("Checkmate - No escape available")
+        return
 
     print("Fail")
+    if safe_moves:
+        print(f"Safe moves available: {safe_moves}")
+    else:
+        print("King has no safe move")
+
 
 
 
