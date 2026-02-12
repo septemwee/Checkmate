@@ -100,7 +100,47 @@ def check_Rook(matrix, k_row, k_col):
     print("Rook: FAIL")     
     return True
 
+def check_pawn(matrix, k_row, k_col):
+    
+    size = len(matrix)
+    attack_positions = [(1, -1), (1, 1)] 
+    
+    for d_row, d_col in attack_positions:
+        check_r, check_c = k_row + d_row, k_col + d_col
+        
+        if 0 <= check_r < size and 0 <= check_c < size:
+            if matrix[check_r][check_c] == 'P':
+                print("Pawn: SUCCESS")
+                return False  
+                
+    print("Pawn: FAIL")
+    return True 
 
+def check_queen(matrix, k_row, k_col):
+    size = len(matrix)
+    directions = [
+        (-1, 0), (1, 0), (0, -1), (0, 1),  
+        (-1, -1), (-1, 1), (1, -1), (1, 1)
+    ]
+    
+    for d_row, d_col in directions:
+        r, c = k_row + d_row, k_col + d_col
+        
+        while (0 <= r < size) and (0 <= c < size):
+            piece = matrix[r][c]
+            
+            if piece in ('K', 'R', 'B', 'Q', 'P'):
+                if piece == 'Q':
+                    print("Queen: SUCCESS")
+                    return False 
+                else:
+                    break
+            
+            r += d_row
+            c += d_col
+            
+    print("Queen: FAIL")
+    return True
 
 def checkmate2(board):
     if not board:
@@ -132,4 +172,12 @@ def checkmate2(board):
     
 
     print("FAIL")
+
+    if not check_pawn(matrix, k_row, k_col):
+        return
+
+    if not check_queen(matrix, k_row, k_col):
+        return
+
+
 
