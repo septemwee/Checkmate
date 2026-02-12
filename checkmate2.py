@@ -106,10 +106,10 @@ def check_pawn(matrix, k_row, k_col):
     attack_positions = [(1, -1), (1, 1)] 
     
     for d_row, d_col in attack_positions:
-        check_r, check_c = k_row + d_row, k_col + d_col
+        r, c = k_row + d_row, k_col + d_col
         
-        if 0 <= check_r < size and 0 <= check_c < size:
-            if matrix[check_r][check_c] == 'P':
+        if 0 <= r < size and 0 <= c < size:
+            if matrix[r][c] == 'P':
                 print("Pawn: SUCCESS")
                 return False  
                 
@@ -169,15 +169,15 @@ def checkmate2(board):
     
     if not check_Rook(matrix,k_row,k_col):
         return
-    
-
-    print("FAIL")
 
     if not check_pawn(matrix, k_row, k_col):
         return
 
     if not check_queen(matrix, k_row, k_col):
         return
+    
+
+    print("FAIL")
 
 
 
