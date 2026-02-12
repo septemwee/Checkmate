@@ -3,8 +3,8 @@ from checkmate2 import checkmate2
 
 def main():
     board = """\
-    . . . .
-    . R . .
+    # # . B
+    . . R .
     . K . .
     . . . .\
     """

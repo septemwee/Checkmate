@@ -58,24 +58,23 @@ def find_king(matrix):
     return None
 
 
-def check_bishop(matrix, k_row, k_col):
+def check_Bishop(matrix, k_row, k_col):
     size = len(matrix)
     directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
     enemies = ('B')
     
     for d_row, d_col in directions:
-        row, col = k_row + d_row, k_col + d_col 
+        r, c = k_row + d_row, k_col + d_col 
         
-        while (0 <= row < size) and (0 <= col < size):
-            piece = matrix[row][col]
-            
-            if piece in ('K', 'R', 'B', 'Q', 'P'):
+        while (0 <= r < size) and (0 <= c < size):
+            piece = matrix[r][c]
+            if piece in ('K','R','B','P','Q'):
                 if piece in enemies:
-                    print("Bishop: SUCECSS")
+                    print("Bishop: SUCCESS")
                     return False
                 break
-            row += d_row
-            col += d_col
+            r += d_row
+            c += d_col
 
     print("Bishop: FAIL")     
     return True
@@ -91,9 +90,9 @@ def check_Rook(matrix, k_row, k_col):
         while (0 <= r < size) and (0 <= c < size):
             piece = matrix[r][c]
             
-            if piece in ('K', 'R', 'B', 'Q', 'P'):
+            if piece in ('K','R','B','P','Q'):
                 if piece in enemies:
-                    print("Rook: SUCECSS")
+                    print("Rook: SUCCESS")
                     return False
                 break
             r += d_row
@@ -125,9 +124,12 @@ def checkmate2(board):
     k_row,k_col = find_king(matrix)
 
 
-    if not check_bishop(matrix,k_row,k_col):
+    if not check_Bishop(matrix,k_row,k_col):
         return
     
-    if check_Rook(matrix,k_row,k_col):
+    if not check_Rook(matrix,k_row,k_col):
         return
+    
+
+    print("FAIL")
 
