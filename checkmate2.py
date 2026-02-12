@@ -18,7 +18,7 @@ def check_rows(matrix):
         if len(row) != num_cols:
             print(f"กรุณาป้อนกระดานให้สมบูรณ์")
             return False
-    return True, ""
+    return True
 
     
 def check_square(matrix):
@@ -39,14 +39,14 @@ def check_square(matrix):
         print("กรุณาป้อนกระดานขนาดจัตุรัส")
         return num_rows, num_cols, False
 
-def is_1king(board_rows):
+def is_1king(matrix):
     count = 0
-    for row in board_rows:
+    for row in matrix:
         count += row.count('K')
     if count == 1:
         return True
     else:
-        print("กรุณาใส่บอร์ดใหม่ที่มี King 1 ตัว")
+        print("กรุณาป้อน King 1 ตัว")
         return False
 
 def find_king(matrix): 
@@ -100,7 +100,7 @@ def check_Rook(matrix, k_row, k_col):
     print("Rook: FAIL")     
     return True
 
-def check_pawn(matrix, k_row, k_col):
+def check_Pawn(matrix, k_row, k_col):
     
     size = len(matrix)
     attack_positions = [(1, -1), (1, 1)] 
@@ -116,7 +116,7 @@ def check_pawn(matrix, k_row, k_col):
     print("Pawn: FAIL")
     return True 
 
-def check_queen(matrix, k_row, k_col):
+def check_Queen(matrix, k_row, k_col):
     size = len(matrix)
     directions = [
         (-1, 0), (1, 0), (0, -1), (0, 1),  
@@ -158,7 +158,7 @@ def checkmate2(board):
     if not check_rows(matrix):
         return
     
-    if not is_1king(board):
+    if not is_1king(matrix):
         return
 
     k_row,k_col = find_king(matrix)
@@ -170,10 +170,10 @@ def checkmate2(board):
     if not check_Rook(matrix,k_row,k_col):
         return
 
-    if not check_pawn(matrix, k_row, k_col):
+    if not check_Pawn(matrix, k_row, k_col):
         return
 
-    if not check_queen(matrix, k_row, k_col):
+    if not check_Queen(matrix, k_row, k_col):
         return
     
 
