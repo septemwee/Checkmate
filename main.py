@@ -3,14 +3,11 @@ from checkmate2 import checkmate2
 
 def main():
     board = """\
-    ..R.
-    ....
-    ....
-    ....\
+    . . . .
+    . R . .
+    . K . .
+    . . . .\
     """
-    # board = """\
-    # \
-    # """
     checkmate2(board)
 
 if __name__ == "__main__":

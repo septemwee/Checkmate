@@ -12,19 +12,32 @@ def create_matrix(board):
             
     return matrix
 
-def validate_rows(matrix):
+def check_rows(matrix):
     num_cols = len(matrix[0])
     for i, row in enumerate(matrix):
         if len(row) != num_cols:
-            msg = f"❌ แถวที่ {i+1} ข้อมูลไม่ครบ! (มี {len(row)} ตัว, แต่ควรมี {num_cols} ตัว)"
-            return False, msg
+            print(f"กรุณาป้อนกระดานให้สมบูรณ์")
+            return False
     return True, ""
 
-def check_square(num_rows, num_cols):
+    
+def check_square(matrix):
+    num_rows = len(matrix) if matrix else 0
+    
+    if num_rows == 0:
+        print("ไม่มีข้อมูลแถว")
+        return None, None, False
+
+    num_cols = len(matrix[0])
+    
+    print(f"Matrix ที่ได้: {matrix}")
+
     if num_rows == num_cols:
-        print("ผลลัพธ์: เป็นตารางจัตุรัส ✅")
+        print("ผลลัพธ์: เป็นตารางจัตุรัส")
+        return num_rows, num_cols, True
     else:
-        print("ไม่ใช่ตารางจัตุรัส ❌")
+        print("กรุณาป้อนกระดานขนาดจัตุรัส")
+        return num_rows, num_cols, False
 
 def is_1king(board_rows):
     count = 0
@@ -40,35 +53,81 @@ def find_king(matrix):
     for r in range(len(matrix)):
         for c in range(len(matrix[r])):
             if matrix[r][c] == 'K':
-                print(f"✅ เจอ King ที่ตำแหน่ง: แถว {r}, คอลัมน์ {c}")
+                print(f"เจอ King ที่ตำแหน่ง: แถว {r}, คอลัมน์ {c}")
                 return r, c
     return None
 
-# --- ฟังก์ชันหลัก ---
+
+def check_bishop(matrix, k_row, k_col):
+    size = len(matrix)
+    directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
+    enemies = ('B')
+    
+    for d_row, d_col in directions:
+        row, col = k_row + d_row, k_col + d_col 
+        
+        while (0 <= row < size) and (0 <= col < size):
+            piece = matrix[row][col]
+            
+            if piece in ('K', 'R', 'B', 'Q', 'P'):
+                if piece in enemies:
+                    print("Bishop: SUCECSS")
+                    return False
+                break
+            row += d_row
+            col += d_col
+
+    print("Bishop: FAIL")     
+    return True
+
+def check_Rook(matrix, k_row, k_col):
+    size = len(matrix)
+    directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+    enemies = ('R')
+     
+    for d_row, d_col in directions:
+        r, c = k_row + d_row, k_col + d_col 
+        
+        while (0 <= r < size) and (0 <= c < size):
+            piece = matrix[r][c]
+            
+            if piece in ('K', 'R', 'B', 'Q', 'P'):
+                if piece in enemies:
+                    print("Rook: SUCECSS")
+                    return False
+                break
+            r += d_row
+            c += d_col
+    print("Rook: FAIL")     
+    return True
+
+
+
 def checkmate2(board):
     if not board:
-        print("ใส่ข้อมูล")
+        print("กรุณาใส่ข้อมูล")
         return
 
     matrix = create_matrix(board)
     
-    num_rows = len(matrix) if matrix else 0
-    if num_rows == 0:
-        print("ไม่มีข้อมูลแถว")
-        return
-
-    num_cols = len(matrix[0])
-    print(f"Matrix ที่ได้: {matrix}")
-
-    is_valid, error_msg = validate_rows(matrix)
-    if not is_valid:
-        print(error_msg)
-        print("ผลลัพธ์: ไม่ใช่ตารางที่สมบูรณ์ ❌")
-        return
-
-    print(f"ขนาด: {num_rows} แถว x {num_cols} คอลัมน์")
-    check_square(num_rows, num_cols)
     
-    is_1king(board)
-    find_king(matrix)
+    num_rows, num_cols, is_ok = check_square(matrix)
+    print(f"ขนาด: {num_rows} แถว x {num_cols} คอลัมน์")
+    if not is_ok:
+        return
+    
+    if not check_rows(matrix):
+        return
+    
+    if not is_1king(board):
+        return
+
+    k_row,k_col = find_king(matrix)
+
+
+    if not check_bishop(matrix,k_row,k_col):
+        return
+    
+    if check_Rook(matrix,k_row,k_col):
+        return
 
