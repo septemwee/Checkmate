@@ -1,13 +1,17 @@
-from checkmate import checkmate
+#!/usr/bin/env python
+from checkmate2 import checkmate2
 
 def main():
-    board = """
-    . . R .
-    . . . .
-    . . K .
-    . . . .
+    board = """\
+    ..R.
+    ....
+    ..K.
+    ....\
     """
-    checkmate(board)
+    # board = """\
+    # \
+    # """
+    checkmate2(board)
 
 if __name__ == "__main__":
     main()
