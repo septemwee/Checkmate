@@ -111,12 +111,20 @@ def check_Queen(matrix, k_row, k_col):
 
 def print_creative_board(matrix):
     print("\n--- Creative Board View ---")
-    icons = {'K': '♔', 'Q': '♕', 'R': '♖', 'B': '♗', 'P': '♙', '.': '⬜'}
+    icons = {
+        'K': '♔',
+        'Q': '♕',
+        'R': '♖',
+        'B': '♗',
+        'P': '♙'
+    }
+
     for row in matrix:
         line = ""
         for char in row:
-            line += icons.get(char, char) + " "
+            line += icons.get(char, '⬜') + " "
         print(line)
+
     print("------------------------------\n")
 
 
