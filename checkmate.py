@@ -68,7 +68,7 @@ def check_Bishop(matrix, k_row, k_col):
             piece = matrix[r][c]
             if piece in ('K','R','B','P','Q'):
                 if piece == 'B':
-                    print("Success")
+                    # print("Success")
                     return False
                 break
             r += d_row
@@ -89,7 +89,7 @@ def check_Rook(matrix, k_row, k_col):
             
             if piece in ('K','R','B','P','Q'):
                 if piece == 'R':
-                    print("Success")
+                    # print("Success")
                     return False
                 break
             r += d_row
@@ -107,7 +107,7 @@ def check_Pawn(matrix, k_row, k_col):
         
         if 0 <= r < size and 0 <= c < size:
             if matrix[r][c] == 'P':
-                print("Success")
+                # print("Success")
                 return False  
                 
     # print("Pawn: FAIL")
@@ -128,7 +128,7 @@ def check_Queen(matrix, k_row, k_col):
             
             if piece in ('K', 'R', 'B', 'Q', 'P'):
                 if piece == 'Q':
-                    print("Success")
+                    # print("Success")
                     return False 
                 else:
                     break
@@ -164,15 +164,19 @@ def checkmate(board):
 
 
     if not check_Bishop(matrix,k_row,k_col):
+        print("Success")
         return
     
     if not check_Rook(matrix,k_row,k_col):
+        print("Success")
         return
 
     if not check_Pawn(matrix, k_row, k_col):
+        print("Success")
         return
 
     if not check_Queen(matrix, k_row, k_col):
+        print("Success")
         return
     
 
